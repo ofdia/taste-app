@@ -6,6 +6,7 @@ Use this as a working draft when filling out Google Play Console.
 
 - User-entered ramen records are stored locally on device
 - Photos are selected from device library only when the user chooses
+- No microphone access is required by the shipped Android config
 - No login flow is present
 - No analytics SDK is present
 - No ads SDK is present

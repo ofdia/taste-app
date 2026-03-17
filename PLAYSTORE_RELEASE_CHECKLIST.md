@@ -3,9 +3,11 @@
 ## Current App Setup
 
 - Android package: `app.ramenlog.mobile`
-- Android versionCode: `1`
+- Android versionCode: `4`
 - Expo app version: `1.0.0`
 - EAS config file: `eas.json`
+- EAS Android keystore: configured
+- Latest production Android build: completed on 2026-03-16
 
 ## Before First Release
 
@@ -28,8 +30,8 @@
    ```bash
    eas build --platform android --profile production
    ```
-6. Create your app in Google Play Console.
-7. Upload the first `.aab` build to the `Internal testing` track.
+6. Confirm your Google Play Console app exists for `app.ramenlog.mobile`.
+7. Upload the latest `.aab` build to the `Internal testing` track.
 
 ## Play Console Tasks
 
@@ -61,4 +63,6 @@ eas submit --platform android --profile production
 
 - `versionCode` must increase for every Play Store update.
 - `autoIncrement` is enabled in `eas.json` for production builds.
+- Android build signing is configured in EAS remote credentials.
+- `android.permission.RECORD_AUDIO` is blocked in `app.json` because the app only uses photo library access.
 - The package name cannot be changed after the app is created in Google Play.
