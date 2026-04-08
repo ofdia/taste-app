@@ -41,6 +41,9 @@ Ramenlog does not sell your personal data.
 
 Ramenlog does not share your personal ramen log data with third parties for advertising or marketing.
 
+Ramenlog may display ads served by Google AdMob. Ad providers may process advertising identifiers, device
+information, and ad interaction data to serve and measure ads.
+
 ## 6. Backups
 
 If you choose to export a backup, the exported backup content is created from your local app data and shared only through actions you explicitly initiate.

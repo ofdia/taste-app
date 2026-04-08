@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { AdBanner } from "@/components/ad-banner";
 import { AppTheme, Colors, Fonts } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { formatDateInput, getMonthDays, getVisitedOn } from "@/services/log-date";
@@ -23,7 +24,7 @@ const STAMP_IMAGE = require("../../assets/images/ramen-stamp.png");
 
 const renderStars = (rating?: string) => {
   const num = Number(rating);
-  if (Number.isNaN(num) || num <= 0) return "평점 없음";
+  if (Number.isNaN(num) || num <= 0) return "별점 없음";
   return "★".repeat(num);
 };
 
@@ -178,7 +179,7 @@ export default function HomeScreen() {
       <View style={styles.selectedDayCard}>
         <Text style={styles.selectedDayTitle}>{selectedDateTitle}</Text>
         {selectedLogs.length === 0 ? (
-          <Text style={styles.selectedDayEmpty}>이 날짜에는 아직 리뷰가 없습니다.</Text>
+          <Text style={styles.selectedDayEmpty}>이 날짜에는 아직 리뷰가 없어요.</Text>
         ) : (
           selectedLogs.map((item) => (
             <Pressable
@@ -197,7 +198,7 @@ export default function HomeScreen() {
               </View>
               <Text style={styles.selectedLogMenu}>{item.menu}</Text>
               <Text numberOfLines={2} style={styles.selectedLogReview}>
-                {item.review?.trim() ? item.review : "작성된 리뷰가 없습니다."}
+                {item.review?.trim() ? item.review : "작성한 리뷰가 없어요."}
               </Text>
             </Pressable>
           ))
@@ -215,7 +216,7 @@ export default function HomeScreen() {
         <View style={styles.emptyCard}>
           <Text style={styles.emptyTitle}>첫 라멘 기록을 남겨보세요</Text>
           <Text style={styles.emptyBody}>
-            가게, 메뉴, 날짜를 입력하면 나만의 라멘 기록이 쌓이기 시작합니다.
+            가게와 메뉴, 날짜를 입력하면 나만의 라멘 기록장을 시작할 수 있어요.
           </Text>
         </View>
       ) : (
@@ -249,11 +250,13 @@ export default function HomeScreen() {
             </View>
 
             <Text numberOfLines={2} style={styles.reviewText}>
-              {item.review?.trim() ? item.review : "작성된 리뷰가 없습니다."}
+              {item.review?.trim() ? item.review : "작성한 리뷰가 없어요."}
             </Text>
           </Pressable>
         ))
       )}
+
+      <AdBanner palette={palette} />
     </ScrollView>
   );
 }

@@ -40,7 +40,7 @@ const calculateShopAverage = (logs: FoodLog[], shopName: string) => {
   });
 
   if (count === 0) {
-    return "No rating";
+    return "별점 없음";
   }
 
   return `${(sum / count).toFixed(1)} / 5`;
@@ -53,10 +53,10 @@ const renderStars = (rating?: string) => {
   const num = Number(rating);
 
   if (Number.isNaN(num) || num <= 0) {
-    return "No rating";
+    return "별점 없음";
   }
 
-  return `★ ${num}/5`;
+  return `${num}점 / 5`;
 };
 
 export default function ExploreScreen() {
@@ -122,7 +122,7 @@ export default function ExploreScreen() {
       const deleted = logs.find((log) => log.id === id) ?? null;
       const updatedLogs = logs.filter((log) => log.id !== id);
       await persistLogs(updatedLogs);
-      showFeedback("Entry removed.", "Undo", () => {
+      showFeedback("기록을 삭제했어요.", "되돌리기", () => {
         if (!deleted) {
           return;
         }
@@ -133,14 +133,14 @@ export default function ExploreScreen() {
       });
     } catch (error) {
       console.error(error);
-      Alert.alert("Error", "There was a problem deleting this entry.");
+      Alert.alert("오류", "기록을 삭제하는 중 문제가 발생했어요.");
     }
   };
 
   const confirmDelete = (id: string) => {
-    Alert.alert("Delete entry", "Do you want to remove this entry?", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Delete", style: "destructive", onPress: () => deleteLog(id) },
+    Alert.alert("기록 삭제", "이 기록을 삭제할까요?", [
+      { text: "취소", style: "cancel" },
+      { text: "삭제", style: "destructive", onPress: () => deleteLog(id) },
     ]);
   };
 
@@ -170,7 +170,7 @@ export default function ExploreScreen() {
         );
       });
 
-      showFeedback(nextFavorite ? "Added to favorites." : "Removed from favorites.");
+      showFeedback(nextFavorite ? "찜 목록에 추가했어요." : "찜 목록에서 제거했어요.");
     } catch (error) {
       console.error(error);
     }
@@ -218,7 +218,7 @@ export default function ExploreScreen() {
   const emptyActions =
     logs.length === 0 ? (
       <Pressable style={styles.emptyPrimaryButton} onPress={() => router.push("/add")}>
-        <Text style={styles.emptyPrimaryButtonText}>Create first entry</Text>
+        <Text style={styles.emptyPrimaryButtonText}>첫 기록 작성하기</Text>
       </Pressable>
     ) : (
       <Pressable
@@ -230,7 +230,7 @@ export default function ExploreScreen() {
           setIsFilterOpen(false);
         }}
       >
-        <Text style={styles.emptySecondaryButtonText}>Reset filters</Text>
+        <Text style={styles.emptySecondaryButtonText}>필터 초기화</Text>
       </Pressable>
     );
 
@@ -238,9 +238,9 @@ export default function ExploreScreen() {
     <>
       <ScreenHeader
         palette={palette}
-        kicker="LOG ARCHIVE"
-        title="Records"
-        subtitle="Browse entries, manage favorites, and jump back into your best ramen spots."
+        kicker="기록 보관함"
+        title="기록"
+        subtitle="기록을 살펴보고 찜한 가게를 관리해 보세요."
       />
 
       {feedback ? (
@@ -256,7 +256,7 @@ export default function ExploreScreen() {
         <View style={styles.searchRow}>
           <TextInput
             style={styles.filterInput}
-            placeholder="Search shop, menu, or ramen type"
+            placeholder="가게, 메뉴, 라멘 종류 검색"
             placeholderTextColor={palette.muted}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -264,14 +264,14 @@ export default function ExploreScreen() {
           />
           <Pressable style={styles.filterToggleButton} onPress={() => setIsFilterOpen((value) => !value)}>
             <Text style={styles.filterToggleText}>
-              {ratingFilter === "all" ? "Filter" : `${ratingFilter}★`}
+              {ratingFilter === "all" ? "필터" : `${ratingFilter}점`}
             </Text>
           </Pressable>
         </View>
 
         {(isFilterOpen || ratingFilter !== "all") && (
           <View style={styles.filterPanel}>
-            <Text style={styles.filterLabel}>Rating</Text>
+            <Text style={styles.filterLabel}>별점</Text>
             <View style={styles.ratingFilterRow}>
               {(["all", "5", "4", "3", "2", "1"] as RatingFilter[]).map((value) => (
                 <Pressable
@@ -288,7 +288,7 @@ export default function ExploreScreen() {
                       ratingFilter === value && styles.ratingFilterTextActive,
                     ]}
                   >
-                    {value === "all" ? "All" : `${value}★`}
+                    {value === "all" ? "전체" : `${value}점`}
                   </Text>
                 </Pressable>
               ))}
@@ -305,7 +305,7 @@ export default function ExploreScreen() {
               setIsFilterOpen(false);
             }}
           >
-            <Text style={styles.resetFilterText}>Clear search</Text>
+            <Text style={styles.resetFilterText}>검색 초기화</Text>
           </Pressable>
         )}
       </View>
@@ -315,13 +315,13 @@ export default function ExploreScreen() {
           style={[styles.segmentButton, viewMode === "all" && styles.segmentButtonActive]}
           onPress={() => setViewMode("all")}
         >
-          <Text style={[styles.segmentText, viewMode === "all" && styles.segmentTextActive]}>All entries</Text>
+          <Text style={[styles.segmentText, viewMode === "all" && styles.segmentTextActive]}>전체 기록</Text>
         </Pressable>
         <Pressable
           style={[styles.segmentButton, viewMode === "photos" && styles.segmentButtonActive]}
           onPress={() => setViewMode("photos")}
         >
-          <Text style={[styles.segmentText, viewMode === "photos" && styles.segmentTextActive]}>Photos</Text>
+          <Text style={[styles.segmentText, viewMode === "photos" && styles.segmentTextActive]}>사진</Text>
         </Pressable>
       </View>
     </>
@@ -338,12 +338,12 @@ export default function ExploreScreen() {
         ListEmptyComponent={
           <View style={styles.emptyCard}>
             <Text style={styles.emptyTitle}>
-              {logs.length === 0 ? "No entries yet" : "No matching entries"}
+              {logs.length === 0 ? "아직 기록이 없어요" : "조건에 맞는 기록이 없어요"}
             </Text>
             <Text style={styles.emptyText}>
               {logs.length === 0
-                ? "Start with one quick ramen log and build your archive from there."
-                : "Try a different keyword or clear the rating filter."}
+                ? "첫 라멘 기록을 남기고 나만의 기록장을 시작해 보세요."
+                : "다른 검색어를 입력하거나 별점 필터를 초기화해 보세요."}
             </Text>
             {emptyActions}
           </View>
@@ -372,7 +372,7 @@ export default function ExploreScreen() {
                     onPress={() => handleToggleFavorite(item.restaurant)}
                   >
                     <Text style={[styles.favoriteChipText, favorite && styles.favoriteChipTextActive]}>
-                      {favorite ? "Saved" : "Save"}
+                      {favorite ? "찜 완료" : "찜하기"}
                     </Text>
                   </Pressable>
                 </View>
@@ -390,12 +390,12 @@ export default function ExploreScreen() {
 
                 <View style={styles.badgeRow}>
                   <View style={styles.badge}>
-                    <Text style={styles.badgeText}>{item.ramenType || "Type unset"}</Text>
+                    <Text style={styles.badgeText}>{item.ramenType || "종류 미지정"}</Text>
                   </View>
                 </View>
 
                 <Text numberOfLines={2} style={styles.reviewText}>
-                  {item.review?.trim() ? item.review : "No written review yet."}
+                  {item.review?.trim() ? item.review : "작성한 리뷰가 아직 없어요."}
                 </Text>
               </Pressable>
 
@@ -409,11 +409,11 @@ export default function ExploreScreen() {
                     })
                   }
                 >
-                  <Text style={styles.primaryActionText}>Edit</Text>
+                  <Text style={styles.primaryActionText}>수정</Text>
                 </Pressable>
 
                 <Pressable style={styles.ghostButton} onPress={() => confirmDelete(item.id)}>
-                  <Text style={styles.ghostButtonText}>Delete</Text>
+                  <Text style={styles.ghostButtonText}>삭제</Text>
                 </Pressable>
               </View>
             </View>
@@ -433,12 +433,12 @@ export default function ExploreScreen() {
       ListEmptyComponent={
         <View style={styles.emptyCard}>
           <Text style={styles.emptyTitle}>
-            {logs.length === 0 ? "No photo reviews yet" : "No matching photos"}
+            {logs.length === 0 ? "아직 사진 기록이 없어요" : "조건에 맞는 사진이 없어요"}
           </Text>
           <Text style={styles.emptyText}>
             {logs.length === 0
-              ? "Add a photo to any entry and it will appear here as a gallery."
-              : "Try switching back to all entries or clearing the current filters."}
+              ? "기록에 사진을 추가하면 여기에서 갤러리처럼 볼 수 있어요."
+              : "전체 기록으로 돌아가거나 현재 필터를 초기화해 보세요."}
           </Text>
           <Pressable
             style={styles.emptySecondaryButton}
@@ -449,7 +449,7 @@ export default function ExploreScreen() {
               setIsFilterOpen(false);
             }}
           >
-            <Text style={styles.emptySecondaryButtonText}>Show all entries</Text>
+            <Text style={styles.emptySecondaryButtonText}>전체 기록 보기</Text>
           </Pressable>
         </View>
       }

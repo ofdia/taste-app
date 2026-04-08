@@ -1,9 +1,11 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { googleMobileAds, isGoogleMobileAdsAvailable } from "@/services/google-mobile-ads";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
@@ -14,6 +16,22 @@ export const unstable_settings = {
 export default function RootLayout() {
   const colorScheme = useColorScheme() ?? "light";
   const palette = Colors[colorScheme];
+
+  useEffect(() => {
+    if (!isGoogleMobileAdsAvailable || !googleMobileAds) {
+      return;
+    }
+
+    googleMobileAds
+      .default()
+      .setRequestConfiguration({
+        maxAdContentRating: googleMobileAds.MaxAdContentRating.PG,
+        tagForChildDirectedTreatment: false,
+        tagForUnderAgeOfConsent: false,
+      })
+      .then(() => googleMobileAds.default().initialize())
+      .catch(console.error);
+  }, []);
 
   const navigationTheme =
     colorScheme === "dark"

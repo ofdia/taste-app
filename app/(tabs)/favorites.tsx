@@ -88,7 +88,7 @@ export default function FavoritesScreen() {
     try {
       await removeFavoriteRamenShop(shopName);
       setFavorites((current) => current.filter((item) => item.name !== shopName));
-      setFeedback("Removed from favorites.");
+      setFeedback("찜 목록에서 제거했어요.");
     } catch (error) {
       console.error(error);
     }
@@ -98,7 +98,7 @@ export default function FavoritesScreen() {
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <ScreenHeader
         palette={palette}
-        kicker="REVISIT LIST"
+        kicker="찜한 가게"
         title="찜한 가게"
         subtitle="다시 가고 싶은 라멘집만 모아 평균 별점과 최근 방문일을 빠르게 확인합니다."
       />
@@ -107,12 +107,12 @@ export default function FavoritesScreen() {
 
       {favorites.length === 0 ? (
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyTitle}>찜한 가게가 없습니다</Text>
+          <Text style={styles.emptyTitle}>찜한 가게가 없어요</Text>
           <Text style={styles.emptyBody}>
             기록 목록이나 상세 화면에서 가게를 찜하면 여기에 재방문 리스트가 쌓입니다.
           </Text>
           <Pressable style={styles.emptyButton} onPress={() => router.push("/explore")}>
-            <Text style={styles.emptyButtonText}>Browse entries</Text>
+            <Text style={styles.emptyButtonText}>기록 보러가기</Text>
           </Pressable>
         </View>
       ) : (

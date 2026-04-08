@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { AdBanner } from "@/components/ad-banner";
 import { exportBackupData, importBackupData } from "@/services/backup";
 import AsyncStorage from "@/services/storage";
 import { AppTheme, Colors, Fonts } from "@/constants/theme";
@@ -23,7 +24,7 @@ type TypeCount = {
   count: number;
 };
 
-const EMPTY_LABEL = "아직 데이터가 없어요";
+const EMPTY_LABEL = "아직 데이터가 없어요.";
 
 export default function StatsScreen() {
   const colorScheme = useColorScheme() ?? "light";
@@ -142,16 +143,16 @@ export default function StatsScreen() {
       <Text style={styles.kicker}>TASTE PROFILE</Text>
       <Text style={styles.title}>라멘 취향 분석</Text>
       <Text numberOfLines={1} style={styles.subtitle}>
-        기록이 쌓일수록 어떤 가게와 타입을 좋아하는지 더 선명하게 보입니다.
+        기록이 쌓일수록 어떤 가게와 타입을 좋아하는지 한눈에 보입니다.
       </Text>
 
       <View style={styles.heroGrid}>
         <View style={styles.highlightCard}>
           <Text style={styles.highlightLabel}>총 기록</Text>
-          <Text style={styles.highlightValue}>{totalCount}회</Text>
+          <Text style={styles.highlightValue}>{totalCount}개</Text>
         </View>
         <View style={styles.infoCard}>
-          <Text style={styles.infoLabel}>가장 자주 먹은 타입</Text>
+          <Text style={styles.infoLabel}>가장 자주 먹는 타입</Text>
           <Text style={styles.infoValue}>{favoriteType}</Text>
         </View>
         <View style={styles.infoCardWide}>
@@ -164,7 +165,7 @@ export default function StatsScreen() {
         <Text style={styles.sectionTitle}>타입별 기록 분포</Text>
 
         {typeCounts.length === 0 ? (
-          <Text style={styles.emptyText}>아직 타입별로 분석할 데이터가 없습니다.</Text>
+          <Text style={styles.emptyText}>아직 타입별로 분석할 데이터가 없어요.</Text>
         ) : (
           typeCounts.map((item) => {
             const ratio = totalCount > 0 ? Math.max(12, (item.count / totalCount) * 100) : 12;
@@ -216,6 +217,8 @@ export default function StatsScreen() {
           </Text>
         </Pressable>
       </View>
+
+      <AdBanner palette={palette} />
     </ScrollView>
   );
 }

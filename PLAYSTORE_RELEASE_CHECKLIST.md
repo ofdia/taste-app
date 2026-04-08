@@ -3,11 +3,11 @@
 ## Current App Setup
 
 - Android package: `app.ramenlog.mobile`
-- Android versionCode: `4`
+- Android versionCode: `5`
 - Expo app version: `1.0.0`
 - EAS config file: `eas.json`
 - EAS Android keystore: configured
-- Latest production Android build: completed on 2026-03-16
+- Latest production Android build: completed on 2026-03-21
 
 ## Before First Release
 
@@ -43,6 +43,13 @@
 - Add privacy policy URL
 - Set test details if requested
 - Add release notes
+- Replace remaining AdMob test IDs before production release
+
+## Current Release Blockers
+
+- Android ads are configured, but iOS still uses Google test App ID and test banner ID.
+- The Play Console privacy policy URL should point to the published `docs/privacy-policy.html` page or another public page with the same AdMob disclosure.
+- Because AdMob is a native SDK, ads must be validated in an Android development build or production build, not Expo Go.
 
 ## Suggested Release Assets
 
@@ -65,4 +72,5 @@ eas submit --platform android --profile production
 - `autoIncrement` is enabled in `eas.json` for production builds.
 - Android build signing is configured in EAS remote credentials.
 - `android.permission.RECORD_AUDIO` is blocked in `app.json` because the app only uses photo library access.
+- AdMob is partially configured for production. Android uses a production App ID and banner unit, while iOS still uses Google test IDs.
 - The package name cannot be changed after the app is created in Google Play.
