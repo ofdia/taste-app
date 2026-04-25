@@ -55,14 +55,14 @@ export const importBackupData = async (rawPayload: string) => {
   const parsed = JSON.parse(rawPayload) as Partial<BackupPayload>;
 
   if (!Array.isArray(parsed.foodLogs) || !parsed.foodLogs.every(isFoodLog)) {
-    throw new Error("INVALID_FOOD_LOGS");
+    throw new Error("기록 데이터 형식이 올바르지 않습니다.");
   }
 
   if (
     !Array.isArray(parsed.savedRamenShops) ||
     !parsed.savedRamenShops.every((shop) => typeof shop === "string")
   ) {
-    throw new Error("INVALID_SHOPS");
+    throw new Error("저장된 가게 데이터 형식이 올바르지 않습니다.");
   }
 
   if (
@@ -70,7 +70,7 @@ export const importBackupData = async (rawPayload: string) => {
     (!Array.isArray(parsed.favoriteRamenShops) ||
       !parsed.favoriteRamenShops.every((shop) => typeof shop === "string"))
   ) {
-    throw new Error("INVALID_FAVORITES");
+    throw new Error("찜한 가게 데이터 형식이 올바르지 않습니다.");
   }
 
   await Promise.all([

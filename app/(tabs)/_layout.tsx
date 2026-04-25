@@ -35,14 +35,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "홈",
+          title: "Home",
           tabBarIcon: ({ color }) => <IconSymbol size={24} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: "기록",
+          title: "Records",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={24} name="book.closed.fill" color={color} />
           ),
@@ -51,14 +51,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favorites"
         options={{
-          title: "찜",
+          title: "Saved",
           tabBarIcon: ({ color }) => <IconSymbol size={24} name="heart.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="stats"
         options={{
-          title: "분석",
+          title: "Stats",
           tabBarIcon: ({ color }) => <IconSymbol size={24} name="chart.bar.fill" color={color} />,
         }}
       />
@@ -66,7 +66,7 @@ export default function TabLayout() {
         name="add"
         options={{
           href: null,
-          title: "추가",
+          title: "Add",
           tabBarItemStyle: { display: "none" },
         }}
       />

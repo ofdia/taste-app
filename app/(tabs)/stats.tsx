@@ -109,7 +109,7 @@ export default function StatsScreen() {
     try {
       const backup = await exportBackupData();
       await Share.share({
-        title: "Taste App Backup",
+        title: "라멘로그 백업",
         message: backup,
       });
     } catch (error) {
@@ -140,7 +140,7 @@ export default function StatsScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-      <Text style={styles.kicker}>TASTE PROFILE</Text>
+      <Text style={styles.kicker}>취향 프로필</Text>
       <Text style={styles.title}>라멘 취향 분석</Text>
       <Text numberOfLines={1} style={styles.subtitle}>
         기록이 쌓일수록 어떤 가게와 타입을 좋아하는지 한눈에 보입니다.

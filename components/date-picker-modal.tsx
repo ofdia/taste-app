@@ -4,7 +4,7 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppTheme, Colors, Fonts } from "@/constants/theme";
 import { formatDateInput, getMonthDays } from "@/services/log-date";
 
-const WEEK_DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const WEEK_DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
 type DatePickerModalProps = {
   value: string;
@@ -38,7 +38,7 @@ export function DatePickerModal({
     setCursorDate(new Date(nextDate.getFullYear(), nextDate.getMonth(), 1));
   }, [value, visible]);
 
-  const monthLabel = new Intl.DateTimeFormat("en-US", {
+  const monthLabel = new Intl.DateTimeFormat("ko-KR", {
     month: "long",
     year: "numeric",
   }).format(cursorDate);

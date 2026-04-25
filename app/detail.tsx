@@ -17,7 +17,7 @@ const renderStars = (rating?: string) => {
   const num = Number(rating);
 
   if (Number.isNaN(num) || num <= 0) {
-    return "No rating";
+    return "평점 없음";
   }
 
   return "★".repeat(num);
@@ -25,9 +25,9 @@ const renderStars = (rating?: string) => {
 
 const optionRows = (log: FoodLog) =>
   [
-    { label: "Broth", value: log.brothSaltiness },
-    { label: "Noodle", value: log.noodleFirmness },
-    { label: "Oil", value: log.oilAmount },
+    { label: "국물", value: log.brothSaltiness },
+    { label: "면", value: log.noodleFirmness },
+    { label: "기름", value: log.oilAmount },
   ].filter((item) => item.value);
 
 export default function DetailScreen() {
@@ -75,9 +75,9 @@ export default function DetailScreen() {
   if (!log) {
     return (
       <View style={styles.emptyWrap}>
-        <Text style={styles.emptyTitle}>Entry not found</Text>
+        <Text style={styles.emptyTitle}>기록을 찾을 수 없습니다.</Text>
         <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <Text style={styles.backButtonText}>Go back</Text>
+          <Text style={styles.backButtonText}>뒤로 가기</Text>
         </Pressable>
       </View>
     );
@@ -89,7 +89,7 @@ export default function DetailScreen() {
     try {
       const nextFavorite = await toggleFavoriteRamenShop(log.restaurant);
       setIsFavorite(nextFavorite);
-      setFeedback(nextFavorite ? "Added to favorites." : "Removed from favorites.");
+      setFeedback(nextFavorite ? "찜 목록에 추가했어요." : "찜 목록에서 제거했어요.");
 
       if (timerRef.current) {
         clearTimeout(timerRef.current);
@@ -105,7 +105,7 @@ export default function DetailScreen() {
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <ScreenHeader
         palette={palette}
-        kicker="ENTRY DETAIL"
+        kicker="기록 상세"
         title={log.menu}
         subtitle={`${log.restaurant} · ${formatDisplayDate(getVisitedOn(log))}`}
       />
@@ -115,15 +115,15 @@ export default function DetailScreen() {
       <View style={styles.heroCard}>
         <View style={styles.heroTopRow}>
           <View style={styles.badge}>
-            <Text style={styles.badgeText}>{log.ramenType || "Type unset"}</Text>
+            <Text style={styles.badgeText}>{log.ramenType || "종류 미설정"}</Text>
           </View>
           <Pressable style={styles.favoriteButton} onPress={handleToggleFavorite}>
-            <Text style={styles.favoriteButtonText}>{isFavorite ? "Unsave" : "Save"}</Text>
+            <Text style={styles.favoriteButtonText}>{isFavorite ? "찜 해제" : "찜하기"}</Text>
           </Pressable>
         </View>
         <View style={styles.metaRow}>
           <Text style={styles.rating}>{renderStars(log.rating)}</Text>
-          <Text style={styles.dateText}>Visited {formatDisplayDate(getVisitedOn(log))}</Text>
+          <Text style={styles.dateText}>방문일 {formatDisplayDate(getVisitedOn(log))}</Text>
         </View>
       </View>
 
@@ -131,7 +131,7 @@ export default function DetailScreen() {
 
       {options.length > 0 ? (
         <View style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>Options</Text>
+          <Text style={styles.sectionTitle}>옵션</Text>
           {options.map((item) => (
             <View key={item.label} style={styles.optionRow}>
               <Text style={styles.optionLabel}>{item.label}</Text>
@@ -142,9 +142,9 @@ export default function DetailScreen() {
       ) : null}
 
       <View style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Review</Text>
+        <Text style={styles.sectionTitle}>리뷰</Text>
         <Text style={styles.reviewText}>
-          {log.review?.trim() ? log.review : "No written review yet."}
+          {log.review?.trim() ? log.review : "아직 작성한 리뷰가 없습니다."}
         </Text>
       </View>
 
@@ -158,10 +158,10 @@ export default function DetailScreen() {
             })
           }
         >
-          <Text style={styles.primaryActionText}>Edit</Text>
+          <Text style={styles.primaryActionText}>수정하기</Text>
         </Pressable>
         <Pressable style={styles.ghostButton} onPress={() => router.back()}>
-          <Text style={styles.ghostButtonText}>Back to list</Text>
+          <Text style={styles.ghostButtonText}>목록으로</Text>
         </Pressable>
       </View>
     </ScrollView>

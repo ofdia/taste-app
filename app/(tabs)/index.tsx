@@ -3,8 +3,8 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import {
-  Image as RNImage,
   Pressable,
+  Image as RNImage,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,7 +15,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AdBanner } from "@/components/ad-banner";
 import { AppTheme, Colors, Fonts } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-import { formatDateInput, getMonthDays, getVisitedOn } from "@/services/log-date";
+import {
+  formatDateInput,
+  getMonthDays,
+  getVisitedOn,
+} from "@/services/log-date";
 import AsyncStorage from "@/services/storage";
 import type { FoodLog } from "@/types/food-log";
 
@@ -96,7 +100,10 @@ export default function HomeScreen() {
   }).format(new Date(selectedDate));
 
   return (
-    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.screenHeader}>
         <Text style={styles.screenTitle}>라멘로그</Text>
       </View>
@@ -108,7 +115,11 @@ export default function HomeScreen() {
               style={styles.calendarNav}
               onPress={() =>
                 setCalendarDate(
-                  new Date(calendarDate.getFullYear(), calendarDate.getMonth() - 1, 1),
+                  new Date(
+                    calendarDate.getFullYear(),
+                    calendarDate.getMonth() - 1,
+                    1,
+                  ),
                 )
               }
             >
@@ -119,7 +130,11 @@ export default function HomeScreen() {
               style={styles.calendarNav}
               onPress={() =>
                 setCalendarDate(
-                  new Date(calendarDate.getFullYear(), calendarDate.getMonth() + 1, 1),
+                  new Date(
+                    calendarDate.getFullYear(),
+                    calendarDate.getMonth() + 1,
+                    1,
+                  ),
                 )
               }
             >
@@ -142,7 +157,11 @@ export default function HomeScreen() {
               }
 
               const dateKey = formatDateInput(
-                new Date(calendarDate.getFullYear(), calendarDate.getMonth(), cell.day),
+                new Date(
+                  calendarDate.getFullYear(),
+                  calendarDate.getMonth(),
+                  cell.day,
+                ),
               );
               const stampCount = stampedDays.get(cell.day) ?? 0;
               const isSelected = dateKey === selectedDate;
@@ -155,10 +174,19 @@ export default function HomeScreen() {
                 >
                   {stampCount > 0 ? (
                     <View style={styles.stampLayer}>
-                      <RNImage source={STAMP_IMAGE} style={styles.stampImage} resizeMode="contain" />
+                      <RNImage
+                        source={STAMP_IMAGE}
+                        style={styles.stampImage}
+                        resizeMode="contain"
+                      />
                     </View>
                   ) : null}
-                  <Text style={[styles.dayNumber, isSelected && styles.dayNumberSelected]}>
+                  <Text
+                    style={[
+                      styles.dayNumber,
+                      isSelected && styles.dayNumberSelected,
+                    ]}
+                  >
                     {cell.day}
                   </Text>
                 </Pressable>
@@ -168,7 +196,10 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <Pressable style={styles.primaryButton} onPress={() => router.push("/add")}>
+      <Pressable
+        style={styles.primaryButton}
+        onPress={() => router.push("/add")}
+      >
         <Text style={styles.primaryButtonText}>새 기록 추가</Text>
       </Pressable>
 
@@ -179,7 +210,9 @@ export default function HomeScreen() {
       <View style={styles.selectedDayCard}>
         <Text style={styles.selectedDayTitle}>{selectedDateTitle}</Text>
         {selectedLogs.length === 0 ? (
-          <Text style={styles.selectedDayEmpty}>이 날짜에는 아직 리뷰가 없어요.</Text>
+          <Text style={styles.selectedDayEmpty}>
+            이 날짜에는 아직 리뷰가 없어요.
+          </Text>
         ) : (
           selectedLogs.map((item) => (
             <Pressable
@@ -193,8 +226,12 @@ export default function HomeScreen() {
               }
             >
               <View style={styles.selectedLogTop}>
-                <Text style={styles.selectedLogRestaurant}>{item.restaurant}</Text>
-                <Text style={styles.selectedLogRating}>{renderStars(item.rating)}</Text>
+                <Text style={styles.selectedLogRestaurant}>
+                  {item.restaurant}
+                </Text>
+                <Text style={styles.selectedLogRating}>
+                  {renderStars(item.rating)}
+                </Text>
               </View>
               <Text style={styles.selectedLogMenu}>{item.menu}</Text>
               <Text numberOfLines={2} style={styles.selectedLogReview}>
@@ -240,12 +277,18 @@ export default function HomeScreen() {
             <Text style={styles.visitDate}>방문 날짜 {getVisitedOn(item)}</Text>
 
             {item.photoUri ? (
-              <Image source={item.photoUri} style={styles.logPhoto} contentFit="cover" />
+              <Image
+                source={item.photoUri}
+                style={styles.logPhoto}
+                contentFit="cover"
+              />
             ) : null}
 
             <View style={styles.badgeRow}>
               <View style={styles.badge}>
-                <Text style={styles.badgeText}>{item.ramenType || "종류 미지정"}</Text>
+                <Text style={styles.badgeText}>
+                  {item.ramenType || "종류 미지정"}
+                </Text>
               </View>
             </View>
 
@@ -315,15 +358,12 @@ const getStyles = (palette: (typeof Colors)["light"], topInset: number) =>
       position: "relative",
       paddingTop: 10,
       paddingBottom: 0,
-      height: 372,
-      justifyContent: "center",
       alignItems: "center",
     },
     calendarCard: {
       width: "100%",
       backgroundColor: palette.card,
       borderRadius: 28,
-      height: 332,
       paddingHorizontal: 22,
       paddingTop: 18,
       paddingBottom: 30,
@@ -373,18 +413,17 @@ const getStyles = (palette: (typeof Colors)["light"], topInset: number) =>
       letterSpacing: 1,
     },
     daysGrid: {
-      flex: 1,
       flexDirection: "row",
       flexWrap: "wrap",
     },
     emptyCell: {
       width: "14.2857%",
-      aspectRatio: 1,
+      height: 42,
       padding: 4,
     },
     dayCell: {
       width: "14.2857%",
-      aspectRatio: 1,
+      height: 42,
       alignItems: "center",
       justifyContent: "center",
       borderRadius: 999,
