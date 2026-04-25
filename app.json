@@ -13,7 +13,7 @@
     },
     "android": {
       "package": "app.ramenlog.mobile",
-      "versionCode": 5,
+      "versionCode": 6,
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO"
       ],
