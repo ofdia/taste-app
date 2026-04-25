@@ -50,6 +50,7 @@
 - Android ads are configured, but iOS still uses Google test App ID and test banner ID.
 - The Play Console privacy policy URL should point to the published `docs/privacy-policy.html` page or another public page with the same AdMob disclosure.
 - Because AdMob is a native SDK, ads must be validated in an Android development build or production build, not Expo Go.
+- For support and privacy contact, use `ramenlog04@gmail.com`.
 
 ## Suggested Release Assets
 

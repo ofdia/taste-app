@@ -56,7 +56,7 @@ Ramenlog is not directed to children under 13.
 
 For privacy or support questions, contact:
 
-- andy1608@users.noreply.github.com
+- ramenlog04@gmail.com
 
 ## 9. Hosting Note
 
